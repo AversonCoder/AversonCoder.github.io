@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+  <title>Averson</title>
+  
+  <link href="/atom.xml" rel="self"/>
+  
+  <link href="http://yoursite.com/"/>
+  <updated>2017-07-07T08:32:49.082Z</updated>
+  <id>http://yoursite.com/</id>
+  
+  <author>
+    <name>Averson</name>
+    
+  </author>
+  
+  <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Averson</title>
+    <link href="http://yoursite.com/2017/07/07/hello-world/"/>
+    <id>http://yoursite.com/2017/07/07/hello-world/</id>
+    <published>2017-07-07T08:15:19.836Z</published>
+    <updated>2017-07-07T08:32:49.082Z</updated>
+    
+    <content type="html"><![CDATA[<p>I’m Averson</p>
+<a id="more"></a>
+<blockquote>
+<p>I’m Averson</p>
+</blockquote>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;I’m Averson&lt;/p&gt;
+    
+    </summary>
+    
+    
+  </entry>
+  
+</feed>
