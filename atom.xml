@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2017-07-07T08:32:49.082Z</updated>
+  <updated>2017-07-11T07:11:30.517Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -16,43 +16,17 @@
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
-    <title>Averson</title>
-    <link href="http://yoursite.com/2017/07/07/hello-world/"/>
-    <id>http://yoursite.com/2017/07/07/hello-world/</id>
-    <published>2017-07-07T08:15:19.836Z</published>
-    <updated>2017-07-07T08:32:49.082Z</updated>
-    
-    <content type="html"><![CDATA[<p>I’m Averson</p>
-<a id="more"></a>
-<blockquote>
-<p>I’m Averson</p>
-</blockquote>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;I’m Averson&lt;/p&gt;
-    
-    </summary>
-    
-    
-  </entry>
-  
-  <entry>
-    <title>jwt</title>
+    <title>JWT 摘要</title>
     <link href="http://yoursite.com/2017/07/01/jwt/"/>
     <id>http://yoursite.com/2017/07/01/jwt/</id>
     <published>2017-07-01T06:41:28.000Z</published>
-    <updated>2017-07-11T06:45:21.162Z</updated>
+    <updated>2017-07-11T07:11:30.517Z</updated>
     
-    <content type="html"><![CDATA[<a id="more"></a>
-<h1 id="JWT-摘要"><a href="#JWT-摘要" class="headerlink" title="JWT 摘要"></a>JWT 摘要</h1><p>参考链接</p>
-<ul>
-<li><a href="https://jwt.io/introduction/" target="_blank" rel="external">介绍视频</a></li>
-<li><a href="http://blog.leapoahead.com/2015/09/07/user-authentication-with-jwt/" target="_blank" rel="external">八幅漫画理解使用 JSON Web Token 设计单点登录系统</a></li>
-<li><a href="https://jwt.io/#debugger" target="_blank" rel="external">在线测试工具</a></li>
-</ul>
-<h2 id="JWT-组成"><a href="#JWT-组成" class="headerlink" title="JWT 组成"></a>JWT 组成</h2><h3 id="Claims（Payload）"><a href="#Claims（Payload）" class="headerlink" title="Claims（Payload）"></a>Claims（Payload）</h3><figure class="highlight json"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">&#123;</div><div class="line">    <span class="attr">"iss"</span>: <span class="string">""</span>,</div><div class="line">    <span class="attr">"iat"</span>: ,</div><div class="line">    <span class="attr">"exp"</span>: ,</div><div class="line">    <span class="attr">"aud"</span>: <span class="string">""</span>,</div><div class="line">    <span class="attr">"sub"</span>: <span class="string">""</span>,</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+    <content type="html"><![CDATA[<p>本文是 <code>JWT</code> （JSON Web Token） 一些记录。</p>
+<a id="more"></a>
+<h2 id="JWT-组成"><a href="#JWT-组成" class="headerlink" title="JWT 组成"></a>JWT 组成</h2><p><strong>Claims（Payload）</strong></p>
+<p>负载部分(实际数据)。可以包含自定义的字段属性。</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">&#123;</div><div class="line">    <span class="attr">"iss"</span>: <span class="string">""</span>,</div><div class="line">    <span class="attr">"iat"</span>: <span class="number">1499756713070</span>,</div><div class="line">    <span class="attr">"exp"</span>: <span class="number">1499756713070</span>,</div><div class="line">    <span class="attr">"aud"</span>: <span class="string">""</span>,</div><div class="line">    <span class="attr">"sub"</span>: <span class="string">""</span></div><div class="line">&#125;</div></pre></td></tr></table></figure>
 <ul>
 <li><code>iss</code> 是 JWT 签发者（Issuer）</li>
 <li><code>iat</code> 是签发时间（Issued At）</li>
@@ -64,27 +38,61 @@
 <blockquote>
 <p>Base64 只是一种编码，是可逆转翻译的。</p>
 </blockquote>
-<h3 id="头部（Header）"><a href="#头部（Header）" class="headerlink" title="头部（Header）"></a>头部（Header）</h3><figure class="highlight json"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">&#123;</div><div class="line">  <span class="attr">"typ"</span>: <span class="string">"JWT"</span>,</div><div class="line">  <span class="attr">"alg"</span>: <span class="string">"HS256"</span></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p><strong>头部（Header）</strong></p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">&#123;</div><div class="line">  <span class="attr">"typ"</span>: <span class="string">"JWT"</span>,</div><div class="line">  <span class="attr">"alg"</span>: <span class="string">"HS256"</span></div><div class="line">&#125;</div></pre></td></tr></table></figure>
 <ul>
 <li><code>typ</code> 是 <code>JWT</code> 类型，可以忽略</li>
 <li><code>alg</code> 是 <code>JWT</code> 用的签名算法</li>
 </ul>
 <p>依旧是 <code>Base64</code> 进行编码。</p>
-<h3 id="签名（Signature）"><a href="#签名（Signature）" class="headerlink" title="签名（Signature）"></a>签名（Signature）</h3><p>将上述的 <code>Payload</code> 和 <code>Header</code> 各自的 <code>Base64</code> 字符串使用 <code>.</code> 拼接后再进行 <code>HS256</code> 进行加密，这个加密的过程还需要提供一个 <code>secret</code>。最后形成签名部分。</p>
+<p><strong>签名（Signature）</strong></p>
+<p>将上述的 <code>Payload</code> 和 <code>Header</code> 各自的 <code>Base64</code> 字符串使用 <code>.</code> 拼接后再进行 <code>HS256</code> 进行加密，这个加密的过程还需要提供一个 <code>secret</code>。最后形成签名部分。</p>
 <p>最后将这三个部分使用 <code>.</code> 进行拼接，形成完整的 <code>JWT</code>。</p>
-<h3 id="签名的目的"><a href="#签名的目的" class="headerlink" title="签名的目的"></a>签名的目的</h3><p>签名的目的是确保不一样的输入产生不一样的输出。<code>Payload</code> 篡改后即使 <code>Header</code> 一样，签名也会不一样。这样服务器根据接收 <code>Payload</code> 和 <code>Header</code> 进行再签名然后对比接收的签名，结果不一致的话返回 <code>Unauthorized（401）</code> 的响应。</p>
+<h2 id="签名的目的"><a href="#签名的目的" class="headerlink" title="签名的目的"></a>签名的目的</h2><p>签名的目的是确保不一样的输入产生不一样的输出。<code>Payload</code> 篡改后即使 <code>Header</code> 一样，签名也会不一样。这样服务器根据接收 <code>Payload</code> 和 <code>Header</code> 进行再签名然后对比接收的签名，结果不一致的话返回 <code>Unauthorized（401）</code> 的响应。</p>
 <h3 id="信息会暴露？"><a href="#信息会暴露？" class="headerlink" title="信息会暴露？"></a>信息会暴露？</h3><p>会暴露，所以我们进行 <code>JWT</code> 传输应该避免放入敏感信息（比如：密码）。这样就算被恶意截取信息进行 <code>Base64</code> 解码，也没什么关系。</p>
-<h3 id="Jwt-使用"><a href="#Jwt-使用" class="headerlink" title="Jwt 使用"></a>Jwt 使用</h3><p>Gradle：</p>
+<h2 id="使用"><a href="#使用" class="headerlink" title="使用"></a>使用</h2><p>Gradle：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">compile(&quot;io.jsonwebtoken:jjwt:0.7.0&quot;)</div></pre></td></tr></table></figure>
 <p>代码：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">createSampleToken</span><span class="params">()</span> <span class="keyword">throws</span> Exception </span>&#123;</div><div class="line">    User user = <span class="keyword">new</span> User();</div><div class="line">    user.setPassword(<span class="string">"pass"</span>);</div><div class="line">    user.setUsername(<span class="string">"username"</span>);</div><div class="line">    user.setLastPasswordResetDate(<span class="keyword">new</span> Date());</div><div class="line">    user.setEmail(<span class="string">"username@email.com"</span>);</div><div class="line"></div><div class="line">    String mockSecret = <span class="string">"ssl-secret"</span>;</div><div class="line"></div><div class="line">    String token = Jwts.builder()</div><div class="line">        .setIssuedAt(<span class="keyword">new</span> Date())</div><div class="line">        .setExpiration(<span class="keyword">new</span> Date(System.currentTimeMillis() + <span class="number">604800</span> * <span class="number">1000</span>))</div><div class="line">        .setSubject(user.getUsername())</div><div class="line">        .signWith(SignatureAlgorithm.HS512, mockSecret)</div><div class="line">        .compact();</div><div class="line">    System.out.println(token);</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">extraUsernameFromToken</span><span class="params">()</span> <span class="keyword">throws</span> Exception </span>&#123;</div><div class="line">    String token</div><div class="line">        = <span class="string">"eyJhbGciOiJIUzUxMiJ9.eyJpYXQiOjE0OTk3NTExMDAsImV4cCI6MTUwMDM1NTkwMCwic3ViIjoidXNlcm5hbWUifQ.l34epQKUnPfuPAigtRuf03_6uFpWjCs0ONDiqJXSqD_rx32NUyA9EYzS1p9v5z0a6E6DwUJlt9MQN_y3Gnn_BQ"</span>;</div><div class="line">    String mockSecret = <span class="string">"ssl-secret"</span>;</div><div class="line">    Claims claims = Jwts.parser()</div><div class="line">        .setSigningKey(mockSecret)</div><div class="line">        .parseClaimsJws(token)</div><div class="line">        .getBody();</div><div class="line">    String username = claims.getSubject();</div><div class="line">    Assert.assertEquals(<span class="string">"username"</span>, username);</div><div class="line">&#125;</div></pre></td></tr></table></figure>]]></content>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">createSampleToken</span><span class="params">()</span> <span class="keyword">throws</span> Exception </span>&#123;</div><div class="line">    User user = <span class="keyword">new</span> User();</div><div class="line">    user.setPassword(<span class="string">"pass"</span>);</div><div class="line">    user.setUsername(<span class="string">"username"</span>);</div><div class="line">    user.setLastPasswordResetDate(<span class="keyword">new</span> Date());</div><div class="line">    user.setEmail(<span class="string">"username@email.com"</span>);</div><div class="line"></div><div class="line">    String mockSecret = <span class="string">"ssl-secret"</span>;</div><div class="line"></div><div class="line">    String token = Jwts.builder()</div><div class="line">        .setIssuedAt(<span class="keyword">new</span> Date())</div><div class="line">        .setExpiration(<span class="keyword">new</span> Date(System.currentTimeMillis() + <span class="number">604800</span> * <span class="number">1000</span>))</div><div class="line">        .setSubject(user.getUsername())</div><div class="line">        .signWith(SignatureAlgorithm.HS512, mockSecret)</div><div class="line">        .compact();</div><div class="line">    System.out.println(token);</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">extraUsernameFromToken</span><span class="params">()</span> <span class="keyword">throws</span> Exception </span>&#123;</div><div class="line">    String token</div><div class="line">        = <span class="string">"eyJhbGciOiJIUzUxMiJ9.eyJpYXQiOjE0OTk3NTExMDAsImV4cCI6MTUwMDM1NTkwMCwic3ViIjoidXNlcm5hbWUifQ.l34epQKUnPfuPAigtRuf03_6uFpWjCs0ONDiqJXSqD_rx32NUyA9EYzS1p9v5z0a6E6DwUJlt9MQN_y3Gnn_BQ"</span>;</div><div class="line">    String mockSecret = <span class="string">"ssl-secret"</span>;</div><div class="line">    Claims claims = Jwts.parser()</div><div class="line">        .setSigningKey(mockSecret)</div><div class="line">        .parseClaimsJws(token)</div><div class="line">        .getBody();</div><div class="line">    String username = claims.getSubject();</div><div class="line">    Assert.assertEquals(<span class="string">"username"</span>, username);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h1 id="参考链接"><a href="#参考链接" class="headerlink" title="参考链接"></a>参考链接</h1><ul>
+<li><a href="https://jwt.io/introduction/" target="_blank" rel="external">介绍视频</a></li>
+<li><a href="http://blog.leapoahead.com/2015/09/07/user-authentication-with-jwt/" target="_blank" rel="external">八幅漫画理解使用 JSON Web Token 设计单点登录系统</a></li>
+<li><a href="https://jwt.io/#debugger" target="_blank" rel="external">在线测试工具</a></li>
+<li><a href="https://zh.wikipedia.org/wiki/%E6%9C%89%E6%95%88%E8%B4%9F%E8%BD%BD" target="_blank" rel="external">有效负载</a></li>
+</ul>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;本文是 &lt;code&gt;JWT&lt;/code&gt; （JSON Web Token） 一些记录。&lt;/p&gt;
+    
+    </summary>
+    
+    
+      <category term="java" scheme="http://yoursite.com/tags/java/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Averson</title>
+    <link href="http://yoursite.com/2017/06/06/hello-world/"/>
+    <id>http://yoursite.com/2017/06/06/hello-world/</id>
+    <published>2017-06-06T08:16:16.000Z</published>
+    <updated>2017-07-11T06:47:10.481Z</updated>
+    
+    <content type="html"><![CDATA[<a id="more"></a>
+<blockquote>
+<p>I’m Averson</p>
+</blockquote>
+]]></content>
     
     <summary type="html">
     
       &lt;a id=&quot;more&quot;&gt;&lt;/a&gt;
-&lt;h1 id=&quot;JWT-摘要&quot;&gt;&lt;a href=&quot;#JWT-摘要&quot; class=&quot;headerlink&quot; title=&quot;JWT 摘要&quot;&gt;&lt;/a&gt;JWT 摘要&lt;/h1&gt;&lt;p&gt;参考链接&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;a href=&quot;https://j
+&lt;blockquote&gt;
+&lt;p&gt;I’m Averson&lt;/p&gt;
+&lt;/blockquote&gt;
+
     
     </summary>
     
