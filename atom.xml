@@ -181,11 +181,11 @@
     <link href="http://yoursite.com/2017/06/06/hello-world/"/>
     <id>http://yoursite.com/2017/06/06/hello-world/</id>
     <published>2017-06-06T08:16:16.000Z</published>
-    <updated>2017-07-11T06:47:10.481Z</updated>
+    <updated>2017-07-13T07:25:16.303Z</updated>
     
     <content type="html"><![CDATA[<a id="more"></a>
 <blockquote>
-<p>I’m Averson</p>
+<p>平凡的程序员！</p>
 </blockquote>
 ]]></content>
     
@@ -193,14 +193,14 @@
     
       &lt;a id=&quot;more&quot;&gt;&lt;/a&gt;
 &lt;blockquote&gt;
-&lt;p&gt;I’m Averson&lt;/p&gt;
+&lt;p&gt;平凡的程序员！&lt;/p&gt;
 &lt;/blockquote&gt;
 
     
     </summary>
     
     
-      <category term="java" scheme="http://yoursite.com/tags/java/"/>
+      <category term="个人" scheme="http://yoursite.com/tags/%E4%B8%AA%E4%BA%BA/"/>
     
   </entry>
   

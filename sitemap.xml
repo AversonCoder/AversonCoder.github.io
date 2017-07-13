@@ -2,6 +2,13 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://yoursite.com/2017/06/06/hello-world/</loc>
+    
+    <lastmod>2017-07-13T07:25:16.303Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>http://yoursite.com/2017/07/02/spring-boot-security-jwt/</loc>
     
     <lastmod>2017-07-13T07:07:23.394Z</lastmod>
@@ -12,13 +19,6 @@
     <loc>http://yoursite.com/2017/07/01/jwt/</loc>
     
     <lastmod>2017-07-11T07:11:30.517Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://yoursite.com/2017/06/06/hello-world/</loc>
-    
-    <lastmod>2017-07-11T06:47:10.481Z</lastmod>
     
   </url>
   
