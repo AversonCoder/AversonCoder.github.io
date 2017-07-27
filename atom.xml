@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2017-07-26T13:48:53.015Z</updated>
+  <updated>2017-07-27T14:38:20.305Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -14,6 +14,53 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Google Architecture Components - Lifecycle</title>
+    <link href="http://yoursite.com/2017/07/08/arch-lifecycle/"/>
+    <id>http://yoursite.com/2017/07/08/arch-lifecycle/</id>
+    <published>2017-07-08T14:36:28.000Z</published>
+    <updated>2017-07-27T14:38:20.305Z</updated>
+    
+    <content type="html"><![CDATA[<p>关于 <code>Arch Lifecycle</code> 的一些摘要。</p>
+<a id="more"></a>
+<h2 id="Lifecycle"><a href="#Lifecycle" class="headerlink" title="Lifecycle"></a>Lifecycle</h2><p><code>Lifecycle</code> 是一个具有生命周期感知的组件。该组件可以根据 <code>Activity</code> 和 <code>Fragment</code> 的生命周期提供相关的调整行为，而好的生命周期控制能有效避免内存泄漏和应用崩溃。</p>
+<p>官方文档有代码，只记录关键点，下同。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onStart</span><span class="params">()</span> </span>&#123;</div><div class="line">    <span class="keyword">super</span>.onStart();</div><div class="line">    locationListener.start();</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onStop</span><span class="params">()</span> </span>&#123;</div><div class="line">    <span class="keyword">super</span>.onStop();</div><div class="line">    locationListener.stop();</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>当开启定位服务前我们应该做一些相关的检查和配置之类的操作。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onStart</span><span class="params">()</span> </span>&#123;</div><div class="line">    <span class="keyword">super</span>.onStart();</div><div class="line">    Util.checkUserStatus(result -&gt; &#123;</div><div class="line">        <span class="keyword">if</span> (result) &#123;</div><div class="line">            myLocationListener.start();</div><div class="line">        &#125;</div><div class="line">    &#125;);</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onStop</span><span class="params">()</span> </span>&#123;</div><div class="line">    <span class="keyword">super</span>.onStop();</div><div class="line">    locationListener.stop();</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>那么上述的代码如果还没检查完，就关闭了界面呢？这就会导致上下文泄漏了，且随着这样的操作越来越多 <code>onStart</code> 和  <code>onPause</code> 方法中的代码会变得愈发臃肿，这个时候我们会考虑到把这些相关代码独立出去封装到一个类中，并根据 <code>Activity</code>（<code>Fragent</code>）的生命周期作出相关的操作，这样能有效的解耦和减少代码的臃肿，那么 <code>Lifecycle</code> 就是一个很好的帮手。</p>
+<p>相关类：</p>
+<ul>
+<li><code>LifecycleOwner</code> 是一个提供 <code>Lifecycle</code> 的接口。</li>
+<li><code>LifecycleObserver</code> 是一个接收生命周期事件和状态的观察者接口。</li>
+<li><code>Lifecycle</code> 是一个感知生命周期的接口，它用来分发和维护生命周期的事件和状态。</li>
+<li><code>Event</code> 分发的生命周期事件，对应 <code>Activity</code> 的生命周期回调，由 <code>Lifecycle</code> 发出</li>
+<li><code>State</code> 表示 <code>LifecycleOwner</code> 当前的状态</li>
+</ul>
+<p><img src="https://git.oschina.net/jocens/source/raw/master/lifecycle-states.png" alt=""></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">MyLocationListener</span> <span class="keyword">implements</span> <span class="title">LifecycleObserver</span> </span>&#123;</div><div class="line">    <span class="meta">@OnLifecycleEvent</span>(Lifecycle.Event.ON_START)</div><div class="line">    <span class="function"><span class="keyword">void</span> <span class="title">start</span><span class="params">()</span> </span>&#123; <span class="comment">// conenct &#125;</span></div><div class="line"></div><div class="line">    <span class="meta">@OnLifecycleEvent</span>(Lifecycle.Event.ON_STOP)</div><div class="line">    <span class="function"><span class="keyword">void</span> <span class="title">stop</span><span class="params">()</span> </span>&#123; <span class="comment">// disconnect &#125;</span></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="meta">@Override</span></div><div class="line"><span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">onCreate</span><span class="params">(Bundle savedInstanceState)</span> </span>&#123;</div><div class="line">    <span class="keyword">super</span>.onCreate(savedInstanceState);</div><div class="line">    getLifecycle().addObserver(<span class="keyword">new</span> MyLocationListener());</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h2 id="最佳实践"><a href="#最佳实践" class="headerlink" title="最佳实践"></a>最佳实践</h2><ul>
+<li>保持 UI Controller（Activity 或 Fragment）尽可能的精简。</li>
+<li><code>UI</code> 层不应该尝试去操作数据，相反，应该使用一个 <code>ViewModel</code> 来完成，当数据变化由 <code>ViewModel</code> 通知 <code>UI</code> 更新。 </li>
+<li>尝试以<a href="https://en.wikipedia.org/wiki/Data-driven_programming" target="_blank" rel="external">数据驱动</a>的模式来驱动 <code>UI Layer</code>，因为 <code>UI Layer</code> 更多根据数据来更新视图或将用户操作通知到 <code>ViewModel</code>。把你的数据放到 <code>ViewModel</code> 中，让 <code>ViewModel</code> 作为 <code>UI Layer</code> 和 <code>Business Logic Layer</code> 的桥梁。当然获取数据的职责不是由 <code>ViewModel</code> 负责。<code>ViewModel</code> 应该调用合适的组件来完成这项工作，并将结果返回到 <code>UI</code> 层。 </li>
+<li>使用 <code>Data Binding</code> 让 <code>UI Controller</code> 和 <code>Views</code> 之间的更整洁，这可以减少你 <code>UI Controller</code> 中 <code>View</code> 相关的模板代码（eg：findViewById…），不过不喜欢 <code>Data Binding</code> 可以使用 <code>ButterKnife</code> 之类的库来代替。</li>
+<li>如果你的 UI 非常复杂，可以考虑创建一个 <code>Presenter Layer</code> 来处理 <code>UI</code> 的更新，虽然有点过度设计，但是这会让你的 <code>UI</code> 更容易测试。</li>
+<li>不要在 <code>ViewModel</code> 中引用 <code>View</code> 或者 <code>Activity</code> 上下文，这样做的情况会导致 <code>Activity</code> 配置改变重新创建而 <code>ViewModel</code> 持有上下文从而引发内存泄漏的例子。</li>
+</ul>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;关于 &lt;code&gt;Arch Lifecycle&lt;/code&gt; 的一些摘要。&lt;/p&gt;
+    
+    </summary>
+    
+    
+      <category term="Android" scheme="http://yoursite.com/tags/Android/"/>
+    
+  </entry>
   
   <entry>
     <title>ConstraintLayout</title>
