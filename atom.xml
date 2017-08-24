@@ -118,11 +118,11 @@
     <link href="http://yoursite.com/2017/07/10/kotlin-lambda/"/>
     <id>http://yoursite.com/2017/07/10/kotlin-lambda/</id>
     <published>2017-07-10T01:13:31.000Z</published>
-    <updated>2017-08-24T10:05:06.336Z</updated>
+    <updated>2017-08-24T10:06:12.338Z</updated>
     
     <content type="html"><![CDATA[<p><code>Kotlin Lambda</code> 记录</p>
 <a id="more"></a>
-<ul>
+<h2 id="目录"><a href="#目录" class="headerlink" title="目录"></a>目录</h2><ul>
 <li><code>Java</code> 中 <code>Lambda</code> 的简介</li>
 <li><code>Kotlin</code> 中 <code>Lambda</code> 表达式介绍</li>
 </ul>
