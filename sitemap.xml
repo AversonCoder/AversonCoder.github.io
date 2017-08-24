@@ -2,6 +2,62 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://yoursite.com/2017/07/10/kotlin-lambda/</loc>
+    
+    <lastmod>2017-08-24T10:05:06.336Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://yoursite.com/2017/08/23/android-custom-view-1/</loc>
+    
+    <lastmod>2017-08-23T01:26:17.762Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://yoursite.com/2017/08/01/architecture/</loc>
+    
+    <lastmod>2017-08-23T01:25:43.435Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://yoursite.com/2017/08/29/handler/</loc>
+    
+    <lastmod>2017-08-23T01:24:11.148Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://yoursite.com/2017/08/28/bitmap/</loc>
+    
+    <lastmod>2017-08-23T01:23:53.571Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://yoursite.com/2017/08/27/activity-source-code/</loc>
+    
+    <lastmod>2017-08-23T01:23:31.930Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://yoursite.com/2017/07/25/rxjava/</loc>
+    
+    <lastmod>2017-08-23T01:22:51.411Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://yoursite.com/2017/07/20/java-optimizing/</loc>
+    
+    <lastmod>2017-08-23T01:16:13.874Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>http://yoursite.com/2017/07/08/arch-lifecycle/</loc>
     
     <lastmod>2017-07-27T14:38:20.305Z</lastmod>
