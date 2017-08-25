@@ -114,11 +114,36 @@
   </entry>
   
   <entry>
+    <title>Kotlin 中的集合操作</title>
+    <link href="http://yoursite.com/2017/07/12/kotlin-collections/"/>
+    <id>http://yoursite.com/2017/07/12/kotlin-collections/</id>
+    <published>2017-07-12T10:08:20.000Z</published>
+    <updated>2017-08-24T10:09:51.842Z</updated>
+    
+    <content type="html"><![CDATA[<p><code>Kotlin</code> 集合操作记录</p>
+<a id="more"></a>
+<h2 id="目录"><a href="#目录" class="headerlink" title="目录"></a>目录</h2><ul>
+<li>集合的函数式操作</li>
+<li>集合懒加载</li>
+<li><code>Kotlin</code> 中使用函数式接口</li>
+</ul>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;&lt;code&gt;Kotlin&lt;/code&gt; 集合操作记录&lt;/p&gt;
+    
+    </summary>
+    
+    
+  </entry>
+  
+  <entry>
     <title>Kotlin 中 Lambda 的使用</title>
     <link href="http://yoursite.com/2017/07/10/kotlin-lambda/"/>
     <id>http://yoursite.com/2017/07/10/kotlin-lambda/</id>
     <published>2017-07-10T01:13:31.000Z</published>
-    <updated>2017-08-24T10:06:48.132Z</updated>
+    <updated>2017-08-25T01:33:07.346Z</updated>
     
     <content type="html"><![CDATA[<p><code>Kotlin Lambda</code> 记录</p>
 <a id="more"></a>
@@ -213,6 +238,11 @@
 <figure class="highlight kotlin"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">data</span> <span class="class"><span class="keyword">class</span> <span class="title">Apple</span></span>(<span class="keyword">val</span> weight: <span class="built_in">Int</span>, <span class="keyword">val</span> color: String)</div><div class="line"></div><div class="line"><span class="keyword">val</span> newApple = ::Apple</div><div class="line"><span class="keyword">val</span> apple = newApple(<span class="number">10</span>, <span class="string">"Green"</span>)</div><div class="line">println(apple)</div></pre></td></tr></table></figure>
 <p>拓展函数：</p>
 <figure class="highlight kotlin"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">fun</span> Apple.<span class="title">isHealth</span><span class="params">()</span></span> = weight &gt; <span class="number">20</span></div><div class="line"><span class="keyword">val</span> predicate = Apple::isHealth</div></pre></td></tr></table></figure>
+<blockquote>
+<p>在 Kotlin 1.1 之前当你引用方法和属性的时候总需要传入实例，1.1 之后已经不需要了</p>
+</blockquote>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// 1.0</span></div><div class="line"><span class="keyword">val</span> apple = Apple(<span class="number">10</span>, <span class="string">"Green"</span>)</div><div class="line"><span class="keyword">val</span> getAppleWeight = Apple::weight</div><div class="line"><span class="keyword">val</span> weight = getAppleWeight(apple)</div><div class="line"><span class="comment">// 1.1</span></div><div class="line"><span class="keyword">val</span> getAppleWeight = apple::weight</div><div class="line"><span class="keyword">val</span> weight = getAppleWeight()</div></pre></td></tr></table></figure>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// 前者类似于</span></div><div class="line">int getWeight(Apple apple) &#123;</div><div class="line">    <span class="keyword">return</span> apple.getWeight()</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="comment">// 后者</span></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Wrapper</span></span>(<span class="keyword">private</span> <span class="keyword">val</span> apple: Apple) &#123;</div><div class="line">    <span class="function"><span class="keyword">fun</span> <span class="title">getWeight</span><span class="params">()</span></span> &#123;</div><div class="line">        <span class="keyword">this</span>.apple.weight</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
 <p>仅需记住一点，使用 <code>::</code> 语法时保证入参和返回值一致即可。 </p>
 ]]></content>
     
