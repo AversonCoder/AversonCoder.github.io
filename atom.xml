@@ -118,11 +118,10 @@
     <link href="http://yoursite.com/2017/07/14/let-apply-with/"/>
     <id>http://yoursite.com/2017/07/14/let-apply-with/</id>
     <published>2017-07-14T14:11:47.000Z</published>
-    <updated>2017-08-27T12:52:03.655Z</updated>
+    <updated>2017-08-27T13:08:50.332Z</updated>
     
-    <content type="html"><![CDATA[<p><code>Kotlin</code> 中 <code>let</code>、<code>apply</code>、<code>with</code>、<code>use</code> 的使用方法。</p>
+    <content type="html"><![CDATA[<p><code>Kotlin Standard.kt</code> 中 <code>let</code>、<code>apply</code>、<code>with</code>、<code>use</code> 的使用方法。</p>
 <a id="more"></a>
-<p><code>Kotlin</code> 的 <code>Standard.kt</code> 探索。</p>
 <h2 id="目录"><a href="#目录" class="headerlink" title="目录"></a>目录</h2><ul>
 <li>let 使用</li>
 <li>apply 使用</li>
@@ -148,7 +147,7 @@
     
     <summary type="html">
     
-      &lt;p&gt;&lt;code&gt;Kotlin&lt;/code&gt; 中 &lt;code&gt;let&lt;/code&gt;、&lt;code&gt;apply&lt;/code&gt;、&lt;code&gt;with&lt;/code&gt;、&lt;code&gt;use&lt;/code&gt; 的使用方法。&lt;/p&gt;
+      &lt;p&gt;&lt;code&gt;Kotlin Standard.kt&lt;/code&gt; 中 &lt;code&gt;let&lt;/code&gt;、&lt;code&gt;apply&lt;/code&gt;、&lt;code&gt;with&lt;/code&gt;、&lt;code&gt;use&lt;/code&gt; 的使用方法。&lt;/p&gt;
     
     </summary>
     
