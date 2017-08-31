@@ -2,23 +2,30 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
-    <loc>http://yoursite.com/2017/07/14/let-apply-with/</loc>
+    <loc>http://yoursite.com/2017/07/15/kotlin-type-system/</loc>
     
-    <lastmod>2017-08-27T15:23:22.761Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://yoursite.com/2017/07/12/kotlin-collections/</loc>
-    
-    <lastmod>2017-08-27T12:50:55.021Z</lastmod>
+    <lastmod>2017-08-31T10:02:18.944Z</lastmod>
     
   </url>
   
   <url>
     <loc>http://yoursite.com/2017/07/10/kotlin-lambda/</loc>
     
-    <lastmod>2017-08-26T08:43:15.027Z</lastmod>
+    <lastmod>2017-08-31T09:58:36.278Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://yoursite.com/2017/07/14/let-apply-with/</loc>
+    
+    <lastmod>2017-08-31T09:58:36.249Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://yoursite.com/2017/07/12/kotlin-collections/</loc>
+    
+    <lastmod>2017-08-31T09:58:35.938Z</lastmod>
     
   </url>
   

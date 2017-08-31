@@ -114,11 +114,153 @@
   </entry>
   
   <entry>
+    <title>Kotlin 类型系统</title>
+    <link href="http://yoursite.com/2017/07/15/kotlin-type-system/"/>
+    <id>http://yoursite.com/2017/07/15/kotlin-type-system/</id>
+    <published>2017-07-15T09:57:06.000Z</published>
+    <updated>2017-08-31T10:02:18.944Z</updated>
+    
+    <content type="html"><![CDATA[<p><code>Kotlin</code> 类型系统摘要</p>
+<a id="more"></a>
+<h2 id="目录"><a href="#目录" class="headerlink" title="目录"></a>目录</h2><ul>
+<li>Null 基本处理</li>
+<li>属性初始化延迟</li>
+<li>拓展函数 Null 检查</li>
+<li>Kotlin 中的原始类型</li>
+<li>Kotlin 中的集合类型的处理</li>
+<li>Kotlin 中的数组</li>
+</ul>
+<h2 id="Null-处理"><a href="#Null-处理" class="headerlink" title="Null 处理"></a>Null 处理</h2><p>毋庸置疑，空指针可谓是开发中遇到最多的异常之一。</p>
+<p>看几个例子：</p>
+<p><code>Map.get()</code> 如果返回 <code>null</code> 到底是对应的 <code>key</code> 没有值，还是说该 <code>key</code> 对应的值就是 <code>null</code>？</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">Map&lt;String, Integer&gt; nameAges = <span class="keyword">new</span> HashMap&lt;&gt;();</div><div class="line">nameAges.put(<span class="string">"Averson"</span>, <span class="number">18</span>);</div><div class="line">Integer bobAge = nameAges.get(<span class="string">"Bob"</span>);</div><div class="line">System.out.println(michal); <span class="comment">// null</span></div><div class="line"></div><div class="line">nameAges.put(<span class="string">"Bob"</span>, <span class="keyword">null</span>);</div><div class="line">bobAge = nameAges.get(<span class="string">"Bob"</span>);</div><div class="line">System.out.println(michal); <span class="comment">// null</span></div></pre></td></tr></table></figure>
+<p>例子中的 <code>null</code> 表意不清，可以是成功可以是失败。</p>
+<p>因此著名的 <code>Guava</code> 库设计了 <code>Optional</code>、<code>Preconditions</code> 等来辅助 <code>null</code> 的处理。</p>
+<p><code>Optional</code> 更明确持有的数据是否有价值，是否存在，有价值如何处理，没价值如何处理。不存在说 “数据为 NULL “ 的说法。具体用法参考 <a href="https://github.com/google/guava/wiki/UsingAndAvoidingNullExplained" target="_blank" rel="external">UsingAndAvoidingNullExplained</a>。<code>Java 8</code> 中提供了比 <code>Guava</code> 更强大的 <code>Optional</code>，可以参考 <a href="https://www.mkyong.com/java8/java-8-optional-in-depth/" target="_blank" rel="external">Java 8 Optional In Depth</a>。在最新版本的 <code>Guava</code> 中支持 <code>Guava Optional</code> 转换为 <code>Java Optional</code>。</p>
+<p>言归正传，在 <code>Kotlin</code> 中是使用 “?” 操作符对类型进行直接 <code>null</code> 约束或操作。</p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">obj?.prop      -&gt; <span class="keyword">if</span> (obj != <span class="literal">null</span>) obj.prop <span class="keyword">else</span> <span class="literal">null</span></div><div class="line">obj?:<span class="keyword">default</span>   -&gt; <span class="keyword">if</span> (obj != <span class="literal">null</span>) obj <span class="keyword">else</span> <span class="keyword">default</span></div><div class="line">obj?:expcetion -&gt; <span class="keyword">if</span> (obj != <span class="literal">null</span>) obj <span class="keyword">else</span> <span class="keyword">throw</span> exception</div></pre></td></tr></table></figure>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Customer</span></span>(<span class="keyword">val</span> name: String, <span class="keyword">val</span> address: Address?)</div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Address</span></span>(<span class="keyword">val</span> name: String, <span class="keyword">val</span> postcode: <span class="built_in">Int</span>)</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">fun</span> Customer.<span class="title">addressName</span><span class="params">()</span></span>: String &#123;</div><div class="line">    <span class="keyword">return</span> address?.name ?: <span class="string">"unknown"</span></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>对应的 <code>Java</code> 代码</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">Address address = customer.getAddress();</div><div class="line">String result;</div><div class="line"><span class="keyword">if</span> (address != <span class="keyword">null</span>) &#123;</div><div class="line">    result = address.getName();</div><div class="line">    <span class="keyword">if</span> (result != <span class="keyword">null</span>) &#123;</div><div class="line">        <span class="keyword">return</span> result;</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line">result = <span class="string">"unknown"</span>;</div><div class="line"><span class="keyword">return</span> result;</div></pre></td></tr></table></figure>
+<p>必须不为 <code>null</code></p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">val</span> name: String? = <span class="literal">null</span></div><div class="line"><span class="comment">// throw NullPointExpcetion()</span></div><div class="line">println(name!!)</div></pre></td></tr></table></figure>
+<p>内部实现和 <a href="https://github.com/google/guava/blob/master/guava/src/com/google/common/base/Optional.java#L104" target="_blank" rel="external"><code>Optional.of()</code></a> 异曲同工。</p>
+<p>不为 <code>null</code> 时执行相关操作。</p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">login?.let &#123;</div><div class="line">    ApiService.login(it.username, it.password)</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>因为 <code>Kotlin</code> 和 <code>Java</code> 两者代码是可以互相交互的所以 <code>?</code> 对应的 <code>Java</code> 类型如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">@Nullable Type -&gt; Type?</div><div class="line">@NotNull Type  -&gt; Type</div></pre></td></tr></table></figure>
+<h2 id="属性初始化延迟"><a href="#属性初始化延迟" class="headerlink" title="属性初始化延迟"></a>属性初始化延迟</h2><p>很多框架会在对象实例化后提供一个单独的方法给开发者进行相关的初始化。比方说 <code>Android</code> 中的 <code>Activity</code> 提供 <code>onCreate</code> 方法进行相关属性初始化。该过程中你的属性不能为 <code>null</code> 而 <code>Activity</code> 有没有构造器进行属性初始化。如果属性允许为 <code>null</code> 并在 <code>onCreate</code> 中执行初始化，那在其他方法中调用则会每次都出现 <code>!!</code> 或 <code>?.</code> 的判断。则会让代码显得非常丑陋。因此 <code>Kotlin</code> 提供 <code>lateinit</code> 关键字。</p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">private</span> <span class="keyword">lateinit</span> <span class="keyword">var</span> api: ApiService</div><div class="line"></div><div class="line"><span class="meta">@Before</span></div><div class="line"><span class="function"><span class="keyword">fun</span> <span class="title">setup</span><span class="params">()</span></span> &#123;</div><div class="line">    api = ApiService()</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="meta">@Test</span></div><div class="line"><span class="function"><span class="keyword">fun</span> <span class="title">hasApi</span><span class="params">()</span></span> &#123;</div><div class="line">    <span class="comment">// 不需要额外的 null 检查</span></div><div class="line">    assertNotNull(api)</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h2 id="拓展函数-Null-检查"><a href="#拓展函数-Null-检查" class="headerlink" title="拓展函数 Null 检查"></a>拓展函数 Null 检查</h2><figure class="highlight kotlin"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">fun</span> String.<span class="title">isNullOrBlank</span><span class="params">()</span></span>: <span class="built_in">Boolean</span> &#123;</div><div class="line">    <span class="keyword">return</span> isBlank();</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>该代码中拓展对象必须不为 <code>null</code>，也就是说下面的代码永远不会调用到 <code>isNullOrBlank</code> 方法，因为 <code>input</code> 可能为 <code>null</code>，你必须要有安全的 <code>null</code> 检查后才能调用 <code>isNullOrBlank</code> 方法。</p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">val</span> input: String? = <span class="literal">null</span></div><div class="line">input.isNullOrBlank()</div><div class="line"><span class="comment">// safe check</span></div><div class="line">input?.isNullOrBlank()</div></pre></td></tr></table></figure>
+<p>那么 <code>isNullOrBlank</code> 这个函数名就起得不对了，<code>isNull</code> 压根就无法检查 <code>null</code>。那么我们如何允许拓展对象即便是 <code>null</code> 的情况下也可以执行相关拓展方法？</p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">fun</span> String?.<span class="title">isNullOrBlank</span><span class="params">()</span></span>: <span class="built_in">Boolean</span> &#123;</div><div class="line">    <span class="keyword">return</span> <span class="keyword">this</span> == <span class="literal">null</span> || isBlank()</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p><code>String?</code> 声明了拓展对象可以是为 <code>null</code> 的情况，现在 <code>null</code> 可以执行检查了。</p>
+<p>当你声明一个拓展函数的时候，你需要考虑这个拓展对象为 <code>null</code> 的情况。当然不为 <code>null</code> 的情况下会更有助于你更改代码，因为它不会造成额外的代码破坏（NPE）。所以你应该考虑清楚到底允许拓展对象是 <code>null</code> 的情况是否具备合理性。</p>
+<h2 id="Kotlin-中的原始类型"><a href="#Kotlin-中的原始类型" class="headerlink" title="Kotlin 中的原始类型"></a>Kotlin 中的原始类型</h2><p>在 <code>Java</code> 中有<strong>原始类型</strong>和<strong>引用类型</strong>类型。而在 <code>Kotlin</code> 中是不区分的。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">int</span> i = <span class="number">1</span>;</div><div class="line">List&lt;Integer&gt; items = <span class="keyword">new</span> ArrayList&lt;&gt;();</div><div class="line">items.add(i);</div></pre></td></tr></table></figure>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">val</span> i: <span class="built_in">Int</span> = <span class="number">1</span></div><div class="line"><span class="keyword">val</span> items = listOf(i)</div></pre></td></tr></table></figure>
+<p><code>Kotlin</code> 不会自动从一个类型转换为另外一个类型，比方说 <code>Int</code> 转为 <code>Long</code>：</p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">val</span> number = <span class="number">1</span></div><div class="line"><span class="keyword">val</span> l: <span class="built_in">Long</span> = number</div></pre></td></tr></table></figure>
+<p>因此 <code>Kotlin</code> 提供了互相转换的方法：</p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Int</span> <span class="keyword">private</span> <span class="keyword">constructor</span></span>() : Number(), Comparable&lt;<span class="built_in">Int</span>&gt; &#123;</div><div class="line">    <span class="keyword">public</span> <span class="keyword">override</span> <span class="function"><span class="keyword">fun</span> <span class="title">toByte</span><span class="params">()</span></span>: <span class="built_in">Byte</span></div><div class="line">    <span class="keyword">public</span> <span class="keyword">override</span> <span class="function"><span class="keyword">fun</span> <span class="title">toChar</span><span class="params">()</span></span>: <span class="built_in">Char</span></div><div class="line">    <span class="keyword">public</span> <span class="keyword">override</span> <span class="function"><span class="keyword">fun</span> <span class="title">toShort</span><span class="params">()</span></span>: <span class="built_in">Short</span></div><div class="line">    <span class="keyword">public</span> <span class="keyword">override</span> <span class="function"><span class="keyword">fun</span> <span class="title">toInt</span><span class="params">()</span></span>: <span class="built_in">Int</span></div><div class="line">    <span class="keyword">public</span> <span class="keyword">override</span> <span class="function"><span class="keyword">fun</span> <span class="title">toLong</span><span class="params">()</span></span>: <span class="built_in">Long</span></div><div class="line">    <span class="keyword">public</span> <span class="keyword">override</span> <span class="function"><span class="keyword">fun</span> <span class="title">toFloat</span><span class="params">()</span></span>: <span class="built_in">Float</span></div><div class="line">    <span class="keyword">public</span> <span class="keyword">override</span> <span class="function"><span class="keyword">fun</span> <span class="title">toDouble</span><span class="params">()</span></span>: <span class="built_in">Double</span></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>在 <code>Java</code> 中的超类是 <code>Object</code>，<strong>而在 <code>Kotlin</code> 中则是 <code>Any</code></strong>。</p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">val</span> name: Any = <span class="string">"Averson"</span></div></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">Object name = <span class="string">"Averson"</span>;</div></pre></td></tr></table></figure>
+<p>在 <code>Kotlin</code> 中 <code>Unit</code> 对应 <code>Java</code> 中的 <code>void</code>。</p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">fun</span> <span class="title">consume</span><span class="params">(content: <span class="type">Any</span>)</span></span>: <span class="built_in">Unit</span> &#123;</div><div class="line">    println(content)</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>区别于 <code>Java</code>，<code>Kotlin</code> 中的 <code>Unit</code> 可以作为泛型参数。</p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">interface</span> <span class="title">Processor</span>&lt;<span class="type">T</span>&gt; </span>&#123; </div><div class="line">    <span class="function"><span class="keyword">fun</span> <span class="title">process</span><span class="params">()</span></span>: T</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">NoResultProcessor</span> : <span class="type">Processor</span>&lt;<span class="type">Unit</span>&gt; </span>&#123;</div><div class="line">    <span class="comment">// Unit 可以忽略不写</span></div><div class="line">    <span class="keyword">override</span> <span class="function"><span class="keyword">fun</span> <span class="title">process</span><span class="params">()</span></span> &#123;</div><div class="line">        <span class="comment">//no-op</span></div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>实际上的原理如下：</p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> static <span class="keyword">final</span> <span class="class"><span class="keyword">class</span> <span class="title">NoResultProcessor</span> <span class="title">implements</span> <span class="title">Processor</span> </span>&#123;</div><div class="line">    <span class="keyword">public</span> void processor() &#123;&#125;</div><div class="line"></div><div class="line">    <span class="keyword">public</span> Object processor() &#123;</div><div class="line">        <span class="keyword">this</span>.processor();</div><div class="line">        <span class="keyword">return</span> <span class="built_in">Unit</span>.INSTANCE;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>很自然我们调用的时候会返回一个 <code>Unit</code> 表示该函数是无返回类型。</p>
+<h2 id="Kotlin-中的集合类型的处理"><a href="#Kotlin-中的集合类型的处理" class="headerlink" title="Kotlin 中的集合类型的处理"></a>Kotlin 中的集合类型的处理</h2><p><code>Kotlin</code> 中提供两种不同的集合接口，分别是<strong>Collection</strong>和<strong>MutableCollection</strong>。前者对元素只读，后者对元素可进行读写等操作。</p>
+<p><code>Kotlin</code> 分别对 <code>Java</code> 中的集合接口提供两种实现，以 <code>Mutable</code> 作为前缀区分。<code>Kotlin</code> 中也提供了相关的静态方法快速创建相关集合。</p>
+<table>
+<thead>
+<tr>
+<th>Collection Type</th>
+<th>Read-Only</th>
+<th>Mutable</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>List</td>
+<td>listOf()</td>
+<td>arrayListOf()</td>
+<td></td>
+</tr>
+<tr>
+<td>Set</td>
+<td>setOf()</td>
+<td>hashSetOf(), linkedSetOf(), sortedSetOf()</td>
+</tr>
+<tr>
+<td>Map</td>
+<td>mapOf()</td>
+<td>hashMapOf(), linkedMapOf(), sortedMapOf()</td>
+</tr>
+</tbody>
+</table>
+<p>一个重要的细节，由于 <code>Kotlin</code> 和 <code>Java</code> 代码可以交互，在 <code>Java</code> 中集合不区分可读写和只读类型，因此 <code>Kotlin</code> 无法传递只读集合到 <code>Java</code> 代码中。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">CollectionsUtil</span> </span>&#123;</div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> List&lt;String&gt; <span class="title">uppercaseAll</span><span class="params">(List&lt;String&gt; items)</span> </span>&#123;</div><div class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; items.size(); i++) &#123;</div><div class="line">            items.set(i, items.get(i).toUpperCase());</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">return</span> items;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">val</span> readOnlyList = listOf(<span class="string">"a"</span>, <span class="string">"b"</span>, <span class="string">"c"</span>)</div><div class="line"><span class="comment">// 在 Java 中能修改只读集合</span></div><div class="line">CollectionsUtil.uppercaseAll(readOnlyList)</div><div class="line">println(readOnlyList)</div><div class="line">&gt;&gt; [A, B, C]</div></pre></td></tr></table></figure>
+<p>所以在定义集合相关的时候应该考虑好：</p>
+<ul>
+<li>集合是否可以为 null</li>
+<li>集合元素是否可以为 null</li>
+<li>集合是否可以修改</li>
+</ul>
+<p>考虑下面这段代码：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">interface</span> <span class="title">FileContentProcessor</span> </span>&#123;</div><div class="line">    <span class="function"><span class="keyword">void</span> <span class="title">processContents</span><span class="params">(File path,</span></span></div><div class="line">                         <span class="keyword">byte</span>[] binaryContents,</div><div class="line">                         List&lt;String&gt; textContents);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>如果 <code>Kotlin</code> 实现这个接口我们需要考虑如下内容：</p>
+<ul>
+<li><code>List&lt;String&gt;</code> 可以为 <code>null</code>，一些文件可能只有二进制，没有文本内容。</li>
+<li><code>List&lt;String&gt;</code> 元素不为 <code>null</code>，因为文件中的内容不为 <code>null</code></li>
+<li><code>List&lt;String&gt;</code> 为只读，因为只显示内容，并且内容不应该被修改。</li>
+</ul>
+<p>默认实现如下：</p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">FileIndexer</span> : <span class="type">FileContentProcessor &#123;</span></span></div><div class="line">    <span class="keyword">override</span> <span class="function"><span class="keyword">fun</span> <span class="title">processContents</span><span class="params">(path: <span class="type">File</span>?, binaryContents: <span class="type">ByteArray</span>?, textContents: <span class="type">MutableList</span>&lt;<span class="type">String</span>&gt;?)</span></span> &#123;</div><div class="line">        <span class="comment">// no-op</span></div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>而我们的需要更改为：</p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">FileIndexer</span> : <span class="type">FileContentProcessor &#123;</span></span></div><div class="line">    <span class="keyword">override</span> <span class="function"><span class="keyword">fun</span> <span class="title">processContents</span><span class="params">(path: <span class="type">File</span>, binaryContents: <span class="type">ByteArray</span>?, textContents: <span class="type">List</span>&lt;<span class="type">String</span>&gt;?)</span></span> &#123;</div><div class="line">        <span class="comment">// no-op</span></div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>在看一个例子：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">DataParser</span>&lt;<span class="title">T</span>&gt; </span>&#123;</div><div class="line">    <span class="function"><span class="keyword">void</span> <span class="title">parseData</span><span class="params">(String input, List&lt;T&gt; output, List&lt;String&gt; errors)</span></span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p><code>Kotlin</code> 默认实现</p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">FeedParser</span> : <span class="type">DataParser</span>&lt;<span class="type">Feed</span>&gt; </span>&#123;</div><div class="line">    <span class="keyword">override</span> <span class="function"><span class="keyword">fun</span> <span class="title">parseData</span><span class="params">(input: <span class="type">String</span>?, output: <span class="type">MutableList</span>&lt;<span class="type">Feed</span>&gt;?, errors: <span class="type">MutableList</span>&lt;<span class="type">String</span>&gt;?)</span></span> &#123;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>考虑如下几点：</p>
+<ul>
+<li>输入不应该为 null</li>
+<li>Feed 集合不应该为 null，并且是可以修改的，因为解析数据后需要添加进去。</li>
+<li>error 集合不应该为 null，但是元素可以为 null，因为解析过程不一定会出现错误。</li>
+</ul>
+<p>所以更改为</p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">FeedParser</span> : <span class="type">DataParser</span>&lt;<span class="type">Feed</span>&gt; </span>&#123;</div><div class="line">    <span class="keyword">override</span> <span class="function"><span class="keyword">fun</span> <span class="title">parseData</span><span class="params">(input: <span class="type">String</span>, output: <span class="type">MutableList</span>&lt;<span class="type">Feed</span>&gt;, errors: <span class="type">MutableList</span>&lt;<span class="type">String</span>?&gt;)</span></span> &#123;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>到此为止 <code>Kotlin</code> 中集合的类型使用基本使用结束。</p>
+<h2 id="Kotlin-中的数组"><a href="#Kotlin-中的数组" class="headerlink" title="Kotlin 中的数组"></a>Kotlin 中的数组</h2><figure class="highlight kotlin"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">Array&lt;<span class="built_in">Int</span>&gt; = Integer[]</div><div class="line">IntArray() = int[]</div></pre></td></tr></table></figure>
+<p>其余依次类推。</p>
+<p>数组的使用：</p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// Int数组容量为 5</span></div><div class="line">IntArray(<span class="number">5</span>)</div><div class="line"></div><div class="line"><span class="comment">// Int数组容量为 5,内容分别是 &#123;1, 2, 3, 4, 5&#125;</span></div><div class="line">intArrayOf(<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>)</div><div class="line"></div><div class="line"><span class="comment">// 容量为 5 并伴随一个初始数据生成的 Lambda</span></div><div class="line">IntArray(<span class="number">5</span>) &#123; index -&gt; index * index &#125;</div><div class="line"></div><div class="line"><span class="comment">// List&lt;Integer&gt; to int[]</span></div><div class="line">listOf(<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>).toIntArray()</div><div class="line"><span class="comment">// 源码</span></div><div class="line">List numberList = CollectionsKt.listOf(new Integer[]&#123; Integer.valueOf(<span class="number">1</span>), Integer.valueOf(<span class="number">2</span>), Integer.valueOf(<span class="number">3</span>) &#125;);</div><div class="line">int[] numberArray = CollectionsKt.toIntArray((Collection)numberList);</div></pre></td></tr></table></figure>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;&lt;code&gt;Kotlin&lt;/code&gt; 类型系统摘要&lt;/p&gt;
+    
+    </summary>
+    
+    
+      <category term="Kotlin" scheme="http://yoursite.com/tags/Kotlin/"/>
+    
+  </entry>
+  
+  <entry>
     <title>Kotlin Standard</title>
     <link href="http://yoursite.com/2017/07/14/let-apply-with/"/>
     <id>http://yoursite.com/2017/07/14/let-apply-with/</id>
     <published>2017-07-14T14:11:47.000Z</published>
-    <updated>2017-08-27T15:23:22.761Z</updated>
+    <updated>2017-08-31T09:58:36.249Z</updated>
     
     <content type="html"><![CDATA[<p><code>Kotlin Standard</code> 库中 <code>let</code>、<code>apply</code>、<code>with</code>、<code>use</code> 的使用方法。</p>
 <a id="more"></a>
@@ -152,7 +294,7 @@
     </summary>
     
     
-      <category term="kotlin" scheme="http://yoursite.com/tags/kotlin/"/>
+      <category term="Kotlin" scheme="http://yoursite.com/tags/Kotlin/"/>
     
   </entry>
   
@@ -161,7 +303,7 @@
     <link href="http://yoursite.com/2017/07/12/kotlin-collections/"/>
     <id>http://yoursite.com/2017/07/12/kotlin-collections/</id>
     <published>2017-07-12T10:08:20.000Z</published>
-    <updated>2017-08-27T12:50:55.021Z</updated>
+    <updated>2017-08-31T09:58:35.938Z</updated>
     
     <content type="html"><![CDATA[<p><code>Kotlin</code> 集合操作记录</p>
 <a id="more"></a>
@@ -224,7 +366,7 @@
     </summary>
     
     
-      <category term="kotlin" scheme="http://yoursite.com/tags/kotlin/"/>
+      <category term="Kotlin" scheme="http://yoursite.com/tags/Kotlin/"/>
     
   </entry>
   
@@ -233,7 +375,7 @@
     <link href="http://yoursite.com/2017/07/10/kotlin-lambda/"/>
     <id>http://yoursite.com/2017/07/10/kotlin-lambda/</id>
     <published>2017-07-10T01:13:31.000Z</published>
-    <updated>2017-08-26T08:43:15.027Z</updated>
+    <updated>2017-08-31T09:58:36.278Z</updated>
     
     <content type="html"><![CDATA[<p><code>Kotlin Lambda</code> 记录</p>
 <a id="more"></a>
@@ -350,6 +492,8 @@
     
     </summary>
     
+    
+      <category term="Kotlin" scheme="http://yoursite.com/tags/Kotlin/"/>
     
   </entry>
   
