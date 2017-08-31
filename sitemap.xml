@@ -4,7 +4,56 @@
   <url>
     <loc>http://yoursite.com/2017/07/15/kotlin-type-system/</loc>
     
-    <lastmod>2017-08-31T10:02:18.944Z</lastmod>
+    <lastmod>2017-08-31T11:52:53.131Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://yoursite.com/2017/07/20/java-optimizing/</loc>
+    
+    <lastmod>2017-08-31T10:06:17.867Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://yoursite.com/2017/07/25/rxjava/</loc>
+    
+    <lastmod>2017-08-31T10:06:04.839Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://yoursite.com/2017/08/23/android-custom-view-1/</loc>
+    
+    <lastmod>2017-08-31T10:05:34.558Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://yoursite.com/2017/08/01/architecture/</loc>
+    
+    <lastmod>2017-08-31T10:05:34.526Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://yoursite.com/2017/08/29/handler/</loc>
+    
+    <lastmod>2017-08-31T10:05:01.977Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://yoursite.com/2017/08/28/bitmap/</loc>
+    
+    <lastmod>2017-08-31T10:03:59.518Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://yoursite.com/2017/08/27/activity-source-code/</loc>
+    
+    <lastmod>2017-08-31T10:03:46.718Z</lastmod>
     
   </url>
   
@@ -26,55 +75,6 @@
     <loc>http://yoursite.com/2017/07/12/kotlin-collections/</loc>
     
     <lastmod>2017-08-31T09:58:35.938Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://yoursite.com/2017/08/23/android-custom-view-1/</loc>
-    
-    <lastmod>2017-08-23T01:26:17.762Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://yoursite.com/2017/08/01/architecture/</loc>
-    
-    <lastmod>2017-08-23T01:25:43.435Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://yoursite.com/2017/08/29/handler/</loc>
-    
-    <lastmod>2017-08-23T01:24:11.148Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://yoursite.com/2017/08/28/bitmap/</loc>
-    
-    <lastmod>2017-08-23T01:23:53.571Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://yoursite.com/2017/08/27/activity-source-code/</loc>
-    
-    <lastmod>2017-08-23T01:23:31.930Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://yoursite.com/2017/07/25/rxjava/</loc>
-    
-    <lastmod>2017-08-23T01:22:51.411Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://yoursite.com/2017/07/20/java-optimizing/</loc>
-    
-    <lastmod>2017-08-23T01:16:13.874Z</lastmod>
     
   </url>
   

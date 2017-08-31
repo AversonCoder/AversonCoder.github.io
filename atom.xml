@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2017-08-23T01:24:11.148Z</updated>
+  <updated>2017-08-31T10:05:01.977Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -16,11 +16,11 @@
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
-    <title>handler</title>
+    <title>全面了解 Handler</title>
     <link href="http://yoursite.com/2017/08/29/handler/"/>
     <id>http://yoursite.com/2017/08/29/handler/</id>
     <published>2017-08-29T01:23:58.000Z</published>
-    <updated>2017-08-23T01:24:11.148Z</updated>
+    <updated>2017-08-31T10:05:01.977Z</updated>
     
     <summary type="html">
     
@@ -30,11 +30,11 @@
   </entry>
   
   <entry>
-    <title>bitmap</title>
+    <title>Android 中高效使用 Bitmap</title>
     <link href="http://yoursite.com/2017/08/28/bitmap/"/>
     <id>http://yoursite.com/2017/08/28/bitmap/</id>
     <published>2017-08-28T01:23:39.000Z</published>
-    <updated>2017-08-23T01:23:53.571Z</updated>
+    <updated>2017-08-31T10:03:59.518Z</updated>
     
     <summary type="html">
     
@@ -44,11 +44,11 @@
   </entry>
   
   <entry>
-    <title>activity-source-code</title>
+    <title>Activity 源码解析</title>
     <link href="http://yoursite.com/2017/08/27/activity-source-code/"/>
     <id>http://yoursite.com/2017/08/27/activity-source-code/</id>
     <published>2017-08-27T01:23:07.000Z</published>
-    <updated>2017-08-23T01:23:31.930Z</updated>
+    <updated>2017-08-31T10:03:46.718Z</updated>
     
     <summary type="html">
     
@@ -58,11 +58,11 @@
   </entry>
   
   <entry>
-    <title>android-custom-view-1</title>
+    <title>Android 自定义 View（一）</title>
     <link href="http://yoursite.com/2017/08/23/android-custom-view-1/"/>
     <id>http://yoursite.com/2017/08/23/android-custom-view-1/</id>
     <published>2017-08-23T01:26:17.000Z</published>
-    <updated>2017-08-23T01:26:17.762Z</updated>
+    <updated>2017-08-31T10:05:34.558Z</updated>
     
     <summary type="html">
     
@@ -72,11 +72,11 @@
   </entry>
   
   <entry>
-    <title>architecture</title>
+    <title>Android 架构的简单演变</title>
     <link href="http://yoursite.com/2017/08/01/architecture/"/>
     <id>http://yoursite.com/2017/08/01/architecture/</id>
     <published>2017-08-01T01:25:05.000Z</published>
-    <updated>2017-08-23T01:25:43.435Z</updated>
+    <updated>2017-08-31T10:05:34.526Z</updated>
     
     <summary type="html">
     
@@ -86,11 +86,11 @@
   </entry>
   
   <entry>
-    <title>rxjava</title>
+    <title>RxJava</title>
     <link href="http://yoursite.com/2017/07/25/rxjava/"/>
     <id>http://yoursite.com/2017/07/25/rxjava/</id>
     <published>2017-07-25T01:22:34.000Z</published>
-    <updated>2017-08-23T01:22:51.411Z</updated>
+    <updated>2017-08-31T10:06:04.839Z</updated>
     
     <summary type="html">
     
@@ -100,11 +100,11 @@
   </entry>
   
   <entry>
-    <title>java-optimizing</title>
+    <title>Java 性能优化</title>
     <link href="http://yoursite.com/2017/07/20/java-optimizing/"/>
     <id>http://yoursite.com/2017/07/20/java-optimizing/</id>
     <published>2017-07-20T01:15:57.000Z</published>
-    <updated>2017-08-23T01:16:13.874Z</updated>
+    <updated>2017-08-31T10:06:17.867Z</updated>
     
     <summary type="html">
     
@@ -118,7 +118,7 @@
     <link href="http://yoursite.com/2017/07/15/kotlin-type-system/"/>
     <id>http://yoursite.com/2017/07/15/kotlin-type-system/</id>
     <published>2017-07-15T09:57:06.000Z</published>
-    <updated>2017-08-31T10:02:18.944Z</updated>
+    <updated>2017-08-31T11:52:53.131Z</updated>
     
     <content type="html"><![CDATA[<p><code>Kotlin</code> 类型系统摘要</p>
 <a id="more"></a>
@@ -241,7 +241,7 @@
 <h2 id="Kotlin-中的数组"><a href="#Kotlin-中的数组" class="headerlink" title="Kotlin 中的数组"></a>Kotlin 中的数组</h2><figure class="highlight kotlin"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">Array&lt;<span class="built_in">Int</span>&gt; = Integer[]</div><div class="line">IntArray() = int[]</div></pre></td></tr></table></figure>
 <p>其余依次类推。</p>
 <p>数组的使用：</p>
-<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// Int数组容量为 5</span></div><div class="line">IntArray(<span class="number">5</span>)</div><div class="line"></div><div class="line"><span class="comment">// Int数组容量为 5,内容分别是 &#123;1, 2, 3, 4, 5&#125;</span></div><div class="line">intArrayOf(<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>)</div><div class="line"></div><div class="line"><span class="comment">// 容量为 5 并伴随一个初始数据生成的 Lambda</span></div><div class="line">IntArray(<span class="number">5</span>) &#123; index -&gt; index * index &#125;</div><div class="line"></div><div class="line"><span class="comment">// List&lt;Integer&gt; to int[]</span></div><div class="line">listOf(<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>).toIntArray()</div><div class="line"><span class="comment">// 源码</span></div><div class="line">List numberList = CollectionsKt.listOf(new Integer[]&#123; Integer.valueOf(<span class="number">1</span>), Integer.valueOf(<span class="number">2</span>), Integer.valueOf(<span class="number">3</span>) &#125;);</div><div class="line">int[] numberArray = CollectionsKt.toIntArray((Collection)numberList);</div></pre></td></tr></table></figure>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// Int数组容量为 5</span></div><div class="line">IntArray(<span class="number">5</span>)</div><div class="line"></div><div class="line"><span class="comment">// Int数组容量为 5,内容分别是 &#123;1, 2, 3, 4, 5&#125;</span></div><div class="line">intArrayOf(<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>)</div><div class="line"></div><div class="line"><span class="comment">// 容量为 5 并伴随一个初始数据生成的 Lambda</span></div><div class="line">IntArray(<span class="number">5</span>) &#123; index -&gt; index * index &#125;</div><div class="line"></div><div class="line"><span class="comment">// List&lt;Integer&gt; to int[]</span></div><div class="line">listOf(<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>).toIntArray()</div><div class="line"><span class="comment">// 源码</span></div><div class="line">List numberList = CollectionsKt.listOf(new Integer[]&#123; Integer.valueOf(<span class="number">1</span>), Integer.valueOf(<span class="number">2</span>), Integer.valueOf(<span class="number">3</span>) &#125;);</div><div class="line">int[] numberArray = CollectionsKt.toIntArray((Collection)numberList);</div><div class="line"></div><div class="line"><span class="comment">// 对于可变参数, Kotlin 提供和 Python 类似的语法 '*' 直接传入</span></div><div class="line"><span class="keyword">val</span> src = arrayListOf(<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>)</div><div class="line"><span class="keyword">val</span> appends = arrayOf(<span class="number">4</span>, <span class="number">5</span>, <span class="number">6</span>)</div><div class="line">Collections.addAll(src, *appends)</div><div class="line">&gt;&gt; [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>, <span class="number">6</span>]</div></pre></td></tr></table></figure>
 ]]></content>
     
     <summary type="html">
