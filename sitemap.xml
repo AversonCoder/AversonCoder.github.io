@@ -2,6 +2,13 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://yoursite.com/2017/07/10/kotlin-lambda/</loc>
+    
+    <lastmod>2017-09-08T02:15:28.473Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>http://yoursite.com/2017/07/15/kotlin-type-system/</loc>
     
     <lastmod>2017-08-31T11:52:53.131Z</lastmod>
@@ -54,13 +61,6 @@
     <loc>http://yoursite.com/2017/08/27/activity-source-code/</loc>
     
     <lastmod>2017-08-31T10:03:46.718Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://yoursite.com/2017/07/10/kotlin-lambda/</loc>
-    
-    <lastmod>2017-08-31T09:58:36.278Z</lastmod>
     
   </url>
   
