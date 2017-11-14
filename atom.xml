@@ -347,11 +347,89 @@
   </entry>
   
   <entry>
+    <title>单一职责</title>
+    <link href="http://yoursite.com/2017/10/14/solid-spp/"/>
+    <id>http://yoursite.com/2017/10/14/solid-spp/</id>
+    <published>2017-10-14T06:55:55.000Z</published>
+    <updated>2017-11-14T14:30:24.022Z</updated>
+    
+    <content type="html"><![CDATA[<p>单一职责 (<code>Single Responsibility Principle</code>) 记录</p>
+<a id="more"></a>
+<h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><p><a href="https://code.tutsplus.com/tutorials/solid-part-1-the-single-responsibility-principle--net-36074" target="_blank" rel="external">SOLID: Part 1 - The Single Responsibility Principle</a></p>
+<h2 id="定义"><a href="#定义" class="headerlink" title="定义"></a>定义</h2><blockquote>
+<p>一个类应该有且只有一个发生改变的原因。</p>
+</blockquote>
+<p>为什么这句话重要？</p>
+<p>如果有两个不同的原因改变这个类的职责。我们想象一下基于这两个不同的原因，我们需要都在这个类中处理。这两个原因导致两个团队都必须对该类添加解决方案。这会导致不兼容、耗费时间和精力的现象出现。</p>
+<h2 id="受众"><a href="#受众" class="headerlink" title="受众"></a>受众</h2><p>确定一个类或者模块的单一职责相当复杂。找到改变这个类的原因其中一个线索就是去分析我们这个类的受众群体。当我们系统提供特定的服务给用户时，就要料想到用户会有不同的需求。那么这些用户是我们的线索，通过这些线索我们分析我们原有类是否存在多个改变的原因。一些简单的模块和受众分析如下：</p>
+<ul>
+<li>持久模块(Persistence Module) - 受众包括 DBA 和软件架构师。</li>
+<li>报告模块(Reporting Module) - 受众包括文员、会计师和操作人员。</li>
+<li>工资系统 - 受众可能包括律师、精力和会计师。</li>
+<li>图书管理系统搜索模块 - 受众可能包括图书管理员和客户</li>
+</ul>
+<h2 id="角色和参与者"><a href="#角色和参与者" class="headerlink" title="角色和参与者"></a>角色和参与者</h2><p>把具体的人和这些角色关联起来相当困难。在一个小公司里，一个人可能需要满足几个角色，而在大公司里，可能几个人分配一个角色。因此，更多时候我们应该思考的是这些角色。但是角色本身很难定义。</p>
+<p>一个角色是什么？我们如何找到它？</p>
+<p>想象一个参与者去扮演这些角色并把我们的受众和这些演员关联起来会更容易找到。</p>
+<blockquote>
+<p>因此，责任是一种服务于某一特定角色的一系列功能 — (Robert C. Martin)</p>
+</blockquote>
+<h2 id="变化的来源"><a href="#变化的来源" class="headerlink" title="变化的来源"></a>变化的来源</h2><p>在这种推理上，参与者们成为我们服务集的变化源泉。随着需求的变化，服务集也必须改变。</p>
+<blockquote>
+<p>一个职责对应的角色是这个职责发生改变的唯一原因。（Robert C. Martin）</p>
+</blockquote>
+<p>一本书的对象</p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Book</span> </span>&#123;</div><div class="line">    <span class="function"><span class="keyword">fun</span> <span class="title">getTitle</span><span class="params">()</span></span>: String &#123;</div><div class="line">        <span class="keyword">return</span> <span class="string">"title"</span></div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">fun</span> <span class="title">getAuthor</span><span class="params">()</span></span>: String &#123;</div><div class="line">        <span class="keyword">return</span> <span class="string">"author"</span></div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">fun</span> <span class="title">turnPage</span><span class="params">()</span></span> &#123;</div><div class="line">        <span class="comment">// pointer to next page</span></div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">fun</span> <span class="title">printCurrentPage</span><span class="params">()</span></span> &#123;</div><div class="line">        println(<span class="string">"current page content"</span>)</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>目前看来该类挺合理，提供标题、作者、翻页和输出页面内容。现在我们开始考虑 Book 对象的受众，他们可能是谁？很容易的我们想到两个角色：图书管理员和数据显示机器（电子屏、纯文本界面）。这是两个不同的受众。将业务逻辑代码和呈现层代码混合在一起是相当糟糕的，因为他们违背了单一职责（SRP）。看看下面的代码：</p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Book</span> </span>&#123;</div><div class="line">    <span class="function"><span class="keyword">fun</span> <span class="title">getTitle</span><span class="params">()</span></span> = <span class="string">"title"</span></div><div class="line">    <span class="function"><span class="keyword">fun</span> <span class="title">getAuthor</span><span class="params">()</span></span> = <span class="string">"averson"</span></div><div class="line">    <span class="function"><span class="keyword">fun</span> <span class="title">turnPage</span><span class="params">()</span></span> &#123; <span class="comment">// pointer to next page &#125;</span></div><div class="line">    <span class="function"><span class="keyword">fun</span> <span class="title">getCurrentPage</span><span class="params">()</span></span> = <span class="string">"current page content"</span></div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="class"><span class="keyword">interface</span> <span class="title">Printer</span> </span>&#123;</div><div class="line">    <span class="function"><span class="keyword">fun</span> <span class="title">printPage</span><span class="params">(content: <span class="type">String</span>)</span></span></div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">PaintTextPrinter</span> : <span class="type">Printer &#123;</span></span></div><div class="line">    <span class="keyword">override</span> <span class="function"><span class="keyword">fun</span> <span class="title">printPage</span><span class="params">(content: <span class="type">String</span>)</span></span> &#123;</div><div class="line">        println(content)</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">HtmlPrinter</span> : <span class="type">Printer &#123;</span></span></div><div class="line">    <span class="keyword">override</span> <span class="function"><span class="keyword">fun</span> <span class="title">printPage</span><span class="params">(content: <span class="type">String</span>)</span></span> &#123;</div><div class="line">        println(<span class="string">"&lt;div style='single-page'&gt;<span class="variable">$content</span>&lt;/div&gt;"</span>)</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>即使是这个非常基本的例子，也展示了如何将表示与业务逻辑分离开来，并遵从 SRP，这在设计的灵活性上有很大的优势。</p>
+<p>与上面的例子相似的一个例子是，对象可以从表示中保存和检索自己。</p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Book</span> </span>&#123;</div><div class="line">    <span class="function"><span class="keyword">fun</span> <span class="title">getTitle</span><span class="params">()</span></span> = <span class="string">"title"</span></div><div class="line">    <span class="function"><span class="keyword">fun</span> <span class="title">getAuthor</span><span class="params">()</span></span> = <span class="string">"averson"</span></div><div class="line">    <span class="function"><span class="keyword">fun</span> <span class="title">turnPage</span><span class="params">()</span></span> &#123;&#125;</div><div class="line">    <span class="function"><span class="keyword">fun</span> <span class="title">getCurrentPage</span><span class="params">()</span></span> = <span class="string">"current page content"</span></div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">fun</span> <span class="title">save</span><span class="params">()</span></span> &#123;</div><div class="line">        <span class="keyword">val</span> filename = <span class="string">"./<span class="subst">$&#123;getTitle()&#125;</span>-<span class="subst">$&#123;getAuthor()&#125;</span>"</span></div><div class="line">        IOUtils.save(filename, <span class="keyword">this</span>)</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>我们可以再次确定几个角色，比如图书管理系统和持久性数据管理。无论何时我们想要改变持久化，我们都需要改变这个类。当我们想要从一页翻到另一页的时候，我们必须修改这个类。这里有几个变化轴心。</p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Book</span> </span>&#123;</div><div class="line">    <span class="function"><span class="keyword">fun</span> <span class="title">getTitle</span><span class="params">()</span></span> = <span class="string">"title"</span></div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">fun</span> <span class="title">getAuthor</span><span class="params">()</span></span> = <span class="string">"author"</span></div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">fun</span> <span class="title">turnPage</span><span class="params">()</span></span> &#123;&#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">fun</span> <span class="title">getCurrentPage</span><span class="params">()</span></span> = <span class="string">"current page content"</span></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">SimpleFilePresistence</span> : <span class="type">Presistence &#123;</span></span></div><div class="line"></div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">fun</span> <span class="title">save</span><span class="params">(book: <span class="type">Book</span>)</span></span> &#123;</div><div class="line">        <span class="keyword">val</span> filename = <span class="string">"./<span class="subst">$&#123;book.getTitle()&#125;</span>-<span class="subst">$&#123;book.getAuthor()&#125;</span>"</span></div><div class="line">        IOUtils.save(filename, book)</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>将持久化操作转移到另一个类将清楚地分离职责，我们将可以灵活地改变持久性策略，而不会影响我们的 Book 类。例如，再实现一个 <code>DatabasePersistence</code> 也将是微不足道的，我们围绕 Book 对象的持久化操作将不会影响原有的业务逻辑。</p>
+<h2 id="软件设计注意事项"><a href="#软件设计注意事项" class="headerlink" title="软件设计注意事项"></a>软件设计注意事项</h2><p>当我们思考我们需要编写的软件时，我们可以分析许多不同的方面。例如，设计多个需求的类代表一个变化的轴心。这些变化的轴心可能是一个单一责任的线索。软件的主要方面是变化，其次方面是功能。为了更好实现次要方面，我们需保证我们的主要方面，我们必须有一个易于更改、扩展、适应新功能并确保遵循 SRP 的设计。</p>
+<p>我们可以一步一步地推理:</p>
+<ol>
+<li>较高的次要方面能及时引导主要方面</li>
+<li>次要方面是用户的需求。</li>
+<li>用户的需求意味着参与者的需求。</li>
+<li>参与者的需求决定了这些参与者的需求变更。</li>
+<li>参与者改变需求决定了我们的职责。</li>
+</ol>
+<p>所以当我们设计我们的软件时，我们应该:</p>
+<ol>
+<li>查找并定义参与者。</li>
+<li>确定为这些参与者提供服务的责任。</li>
+<li>将我们的函数和类分组，以便每个模块都只有一个集中的职责。</li>
+</ol>
+<h2 id="一个不太明显的例子"><a href="#一个不太明显的例子" class="headerlink" title="一个不太明显的例子"></a>一个不太明显的例子</h2><figure class="highlight kotlin"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Book</span> </span>&#123;</div><div class="line">    <span class="function"><span class="keyword">fun</span> <span class="title">getTitle</span><span class="params">()</span></span> = <span class="string">"title"</span></div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">fun</span> <span class="title">getAuthor</span><span class="params">()</span></span> = <span class="string">"author"</span></div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">fun</span> <span class="title">turnPage</span><span class="params">()</span></span> &#123;&#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">fun</span> <span class="title">getCurrentPage</span><span class="params">()</span></span> = <span class="string">"current page content"</span></div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">fun</span> <span class="title">getLocation</span><span class="params">()</span></span> &#123; <span class="comment">// return position &#125;</span></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>现在看来，这似乎是完全合理的。我们没有方法来处理持久性或展示。我们有 <code>turnPage()</code> 功能和一些方法来提供关于这本书的不同信息。然而，我们可能有一个问题。为了找到答案，我们可能需要分析我们的应用程序。函数 <code>getLocation()</code> 可能是问题所在。<code>Book</code> 类的所有方法都是关于业务逻辑的。因此，我们的观点必须从企业的角度出发。如果我们的应用程序真的被图书管理员所使用，他们正在搜索书籍，并给我们一本实体书，那么 <code>SRP</code> 可能会被违反。我们可以推断出，参与者感兴趣的操作操作是 <code>getTitle()</code>、<code>getAuthor()</code> 和 <code>getLocation()</code>。</p>
+<p>客户还可以访问应用程序来选择一本书，并阅读前几页来了解这本书，并决定是否需要它。因此，所有读者的参与者除了 <code>getLocations()</code>，可能对其余的方法都感兴趣。一个普通的客户不关心书放在图书馆的什么地方。这本书将由图书管理员转交给客户。所以，我们确实有违反 SRP 的行为。</p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Book</span> </span>&#123;</div><div class="line">    <span class="function"><span class="keyword">fun</span> <span class="title">getTitle</span><span class="params">()</span></span> = <span class="string">"title"</span></div><div class="line">    <span class="function"><span class="keyword">fun</span> <span class="title">getAuthor</span><span class="params">()</span></span> = <span class="string">"averson"</span></div><div class="line">    <span class="function"><span class="keyword">fun</span> <span class="title">turnPage</span><span class="params">()</span></span> &#123;&#125;</div><div class="line">    <span class="function"><span class="keyword">fun</span> <span class="title">getCurrentPage</span><span class="params">()</span></span> = <span class="string">"current page content"</span></div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">BookLocator</span> </span>&#123;</div><div class="line"></div><div class="line">    functin locate(book: Book) &#123;</div><div class="line">        findBookBy(book.getTitle(), book.getAuthor())</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>在介绍图书定位器时，图书管理员将对图书定位器感兴趣。客户只会对这本书感兴趣。当然，有几种方法可以实现一个 <code>BookLocator</code>。它可以使用作者、标题或图书对象，从书中获取所需的信息。这总是取决于我们的业务。重要的是，如果图书馆被改变，图书管理员不得不在不同的图书馆找书，但图书对象就不会受到影响。同样，如果我们决定为读者提供预览的摘要，而不是让他们浏览页面，那将不会影响图书管理员，也不会影响图书的书架。但是，如果我们的业务是消除图书管理员并在我们的库中创建一个自助服务机制，那么我们可以考虑在我们的第一个示例中使用 SRP。读者也是我们的图书管理员，他们需要自己去找这本书，然后在自动化系统中查找。这也是一种可能性。重要的是要记住，你必须仔细考虑你的业务。</p>
+<h2 id="再思考"><a href="#再思考" class="headerlink" title="再思考"></a>再思考</h2><p>在编写代码时，应该始终考虑单一职责原则。类和模块设计受到它的高度影响，它导致了一个低耦合的设计，并且越来越少的依赖关系。但就像任何一枚硬币一样，它有两个面。从我们应用程序的开始就很容易设计出 <code>SRP</code>。同样，我们也很容易确定我们想要或需要的演员数量。但从设计的角度来看，这实际上是危险的 —— 从一开始就试着去思考方方面面。过度的 <code>SRP</code> 考虑很容易导致过早的优化，而不是考虑更好的设计，这是导致分散的一个理由，类或模块的明确职责可能难以理解。</p>
+<p>因此，无论何时，当您看到一个类或模块因不同的原因而发生变化时，不要犹豫，采取必要的步骤来尊重 <code>SRP</code>，但是不要过度，因为过早的优化可能会蒙蔽你的双眼。</p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;单一职责 (&lt;code&gt;Single Responsibility Principle&lt;/code&gt;) 记录&lt;/p&gt;
+    
+    </summary>
+    
+    
+      <category term="java" scheme="http://yoursite.com/tags/java/"/>
+    
+  </entry>
+  
+  <entry>
     <title>全面了解 Handler</title>
     <link href="http://yoursite.com/2017/08/29/handler/"/>
     <id>http://yoursite.com/2017/08/29/handler/</id>
     <published>2017-08-29T01:23:58.000Z</published>
-    <updated>2017-08-31T10:05:01.977Z</updated>
+    <updated>2017-11-04T04:04:35.676Z</updated>
     
     <summary type="html">
     

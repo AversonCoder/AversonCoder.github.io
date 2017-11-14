@@ -2,9 +2,23 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://yoursite.com/2017/10/14/solid-spp/</loc>
+    
+    <lastmod>2017-11-14T14:30:24.022Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>http://yoursite.com/2017/11/04/kcodestyle/</loc>
     
     <lastmod>2017-11-04T15:13:45.435Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://yoursite.com/2017/08/29/handler/</loc>
+    
+    <lastmod>2017-11-04T04:04:35.676Z</lastmod>
     
   </url>
   
@@ -54,13 +68,6 @@
     <loc>http://yoursite.com/2017/08/01/architecture/</loc>
     
     <lastmod>2017-08-31T10:05:34.526Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://yoursite.com/2017/08/29/handler/</loc>
-    
-    <lastmod>2017-08-31T10:05:01.977Z</lastmod>
     
   </url>
   
